@@ -8,13 +8,12 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 app.use(express.static(path.join(__dirname+'/public')));
+let count = 0;
 
 io.on('connection', function(socket){
-	let count = 0;
-	
 	socket.on('newuser',function(username){
 		socket.broadcast.emit('update', username + ' joined the conversation');
-		count ++;
+		count += 1;
 		io.emit('userCount', count);
 	});
 	socket.on('exituser',function(username){
@@ -27,7 +26,9 @@ io.on('connection', function(socket){
 	});
 	socket.on('disconnect', function(username){
 		socket.broadcast.emit("update", 'A user has left the conversation');
-		count --;
+		count -= 1;
+		if (count < 0)
+			count == 0;
 		io.emit('userCount', Math.abs(count));
 	});
 });
@@ -35,6 +36,3 @@ io.on('connection', function(socket){
 server.listen(process.env.PORT || PORT, ()=>{
 	console.log(`The server is now running on port ${PORT}! Betta Go Catch It!`)
 });
-
-
-
