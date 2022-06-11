@@ -8,12 +8,12 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 app.use(express.static(path.join(__dirname+'/public')));
-let count = 0;
+var count = 0;
 
 io.on('connection', function(socket){
 	socket.on('newuser',function(username){
 		socket.broadcast.emit('update', username + ' joined the conversation');
-		count += 1;
+		count ++;
 		io.emit('userCount', count);
 	});
 	socket.on('exituser',function(username){
@@ -26,9 +26,7 @@ io.on('connection', function(socket){
 	});
 	socket.on('disconnect', function(username){
 		socket.broadcast.emit("update", 'A user has left the conversation');
-		count -= 1;
-		if (count < 0)
-			count == 0;
+		count --;
 		io.emit('userCount', Math.abs(count));
 	});
 });
