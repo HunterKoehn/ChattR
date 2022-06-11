@@ -27,6 +27,8 @@ io.on('connection', function(socket){
 	socket.on('disconnect', function(username){
 		socket.broadcast.emit("update", 'A user has left the conversation');
 		count--;
+		if (count < 0)
+			count == 0;
 		io.emit('userCount', count);
 	});
 });
