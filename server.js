@@ -19,7 +19,7 @@ io.on('connection', function(socket){
 	socket.on('exituser',function(username){
 		// socket.broadcast.emit("update", username + ' left the conversation');
 		// count--;
-		io.emit('userCount', count);
+		io.emit('userCount', Math.abs(count));
 	});
 	socket.on('chat',function(message){
 		socket.broadcast.emit('chat', message);
@@ -29,7 +29,7 @@ io.on('connection', function(socket){
 		count -= 1;
 		if (count < 0)
 			count == 0;
-		io.emit('userCount', count);
+		io.emit('userCount', Math.abs(count));
 	});
 });
 
