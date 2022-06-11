@@ -13,7 +13,7 @@ let count = 0;
 io.on('connection', function(socket){
 	socket.on('newuser',function(username){
 		socket.broadcast.emit('update', username + ' joined the conversation');
-		count++;
+		count += 1;
 		io.emit('userCount', count);
 	});
 	socket.on('exituser',function(username){
@@ -26,7 +26,7 @@ io.on('connection', function(socket){
 	});
 	socket.on('disconnect', function(username){
 		socket.broadcast.emit("update", 'A user has left the conversation');
-		count--;
+		count -= 1;
 		if (count < 0)
 			count == 0;
 		io.emit('userCount', count);
