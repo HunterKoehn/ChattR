@@ -11,7 +11,7 @@ todo possiblities:
   - timestamps for messages
   - make messages round instead of square
   - add other rooms instead of just one?
-  - privata 1-1 message capabilities between users
+  - private 1-1 message capabilities between users
 
 
 
